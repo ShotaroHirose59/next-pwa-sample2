@@ -104,3 +104,17 @@ PWAの起動が成功すると以下のの5つがpublicフォルダ内に生成�
 これらのファイルは恒久的に更新がされてしまう為、GitHubへはpushしないようにする。
 
 
+## iOSのスプラッシュスクリーン対応
+AndriodではデフォルトでPWAの起動画面をいい感じにしてくれるが、（本サイトでは未検証）
+iOSでは起動画面が真っ白になるので別途設定する必要がある。
+
+`_document.tsx`に以下2行を追加
+
+```
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.9/pwacompat.min.js" integrity="sha384VcI6S+HIsE80FVM1jgbd6WDFhzKYA0PecD/LcIyMQpT4fMJdijBh0I7Iblaacawc" crossOrigin="anonymous" />
+```
+
+### 実機で確認
+- iOSのスプラッシュスクリーン未対応： https://next-pwa-sample-sooty.vercel.app/
+- iOSのスプラッシュスクリーン対応済： https://next-pwa-sample2.vercel.app/
