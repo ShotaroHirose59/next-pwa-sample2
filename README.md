@@ -93,4 +93,14 @@ module.exports = withPWA({
 });
 ```
 
+## 補足
+### .gitignoreの設定
+PWAの起動が成功すると以下のの5つがpublicフォルダ内に生成される。
+- sw.js
+- sw.js.map
+- vercel.svg
+- workbox***.js
+- workbox***.js.map
+これらのファイルは恒久的に更新がされてしまう為、GitHubへはpushしないようにする。
+
 
