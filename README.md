@@ -10,25 +10,97 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## next-pwaのインストール
+```
+npm install next-pwa
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## manifestの生成
+`public`フォルダにPWAの設定ファイルである`manifest.json`を設置
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```manifest.json
+{
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "next sample pwa",
+  "short_name": "next pwa",
+  "description": "This is a demo to create PWA with next",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+  },
+  {
+      "src": "/icon.png",
+      "sizes": "384x384",
+      "type": "image/png"
+  },
+  {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+  }
+  ]
+}
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## _document.tsxファイルを作成
 
-## Learn More
+``` _document.tsx
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
-To learn more about Next.js, take a look at the following resources:
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/icon.png"></link>
+          <meta name="theme-color" content="#fff" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+export default MyDocument;
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## next.config.js
+``` next.config.js
+const withPWA = require("next-pwa");
 
-## Deploy on Vercel
+module.exports = withPWA({
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
+  reactStrinctMode: true,
+});
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 補足
+### .gitignoreの設定
+PWAの起動が成功すると以下のの5つがpublicフォルダ内に生成される。
+- sw.js
+- sw.js.map
+- vercel.svg
+- workbox***.js
+- workbox***.js.map
+これらのファイルは恒久的に更新がされてしまう為、GitHubへはpushしないようにする。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
