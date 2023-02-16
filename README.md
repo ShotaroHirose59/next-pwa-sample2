@@ -118,3 +118,5 @@ iOSでは起動画面が真っ白になるので別途設定する必要があ�
 ### 実機で確認
 - iOSのスプラッシュスクリーン未対応： https://next-pwa-sample-sooty.vercel.app/
 - iOSのスプラッシュスクリーン対応済： https://next-pwa-sample2.vercel.app/
+
+<img width="205" alt="スクリーンショット 2023-02-16 18 23 16" src="https://user-images.githubusercontent.com/55835461/219333841-3639cffb-2b05-41cd-ae0b-0dc4d7ea9980.png">
